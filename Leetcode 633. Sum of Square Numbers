@@ -1,0 +1,23 @@
+bool judgeSquareSum(int c) {
+
+    long long st = 0;
+
+    long long end = (long long)ceil(sqrt(c));
+
+    while (st <= end) {
+
+        long long sq = (st * st) + (end * end);
+
+        if (sq == c) {
+            return 1;
+
+        } else if (sq > c) {
+            end--;
+ 
+        } else {
+            st++;
+        }
+    }
+
+    return 0;
+}
