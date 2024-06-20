@@ -1,0 +1,39 @@
+int cmpfunc(const void *a, const void *b) {
+   return (*(int*)a - *(int*)b);
+}
+bool ptop(int f, int arr[], int m, int size) {
+    int prev = arr[0];
+    int countballs = 1;
+
+    for (int i = 1; i < size; i++) {
+        int curr = arr[i];
+
+        if (curr - prev >= f) {
+            countballs++;
+            prev = curr;
+        }
+
+        if (countballs == m) break;
+    }
+    return countballs == m;
+}
+
+int maxDistance(int* position, int positionSize, int m) {
+    qsort(position, positionSize, sizeof(int), cmpfunc);
+
+    int minF = 1;
+    int maxF = position[positionSize - 1] - position[0];
+    int res = 0;
+
+    while (minF <= maxF) {
+        int midF = minF + (maxF - minF) / 2;
+
+        if (ptop(midF, position, m, positionSize)) {
+            res = midF;
+            minF = midF + 1;
+        } else {
+            maxF = midF - 1;
+        }
+    }
+    return res;
+}
