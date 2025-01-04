@@ -1,0 +1,56 @@
+class Solution {
+        public static int countPalindromicSubsequence(String s) {
+        HashMap<Character, int[]> map = new HashMap<>();
+
+        int n = s.length();
+        int count = 0;
+        
+        for(int i = 97; i <= 122; i++){
+            int []arr = new int[2]; 
+            map.put((char)i, arr);
+        }
+
+        for(int i = 97; i <= 122; i++){
+            char character = (char)i;  
+
+            for(int j = 0; j < n; j++){
+                if(s.charAt(j) == character){
+                    map.get(character)[0] = j;
+                    break;
+                }
+            }
+            for(int j = n-1; j >= 0; j--){
+                if(s.charAt(j) == character){ 
+                    map.get(character)[1] = j;
+                    break;  
+                }
+            }
+        }
+
+        for(char x: map.keySet()){ 
+            System.out.println(x + " -> " + map.get(x)[0] + " " + map.get(x)[1]);
+        }
+
+        for(char x: map.keySet()){
+
+            int startIndex = map.get(x)[0];
+            int endIndex = map.get(x)[1];
+
+            if(startIndex == endIndex){
+                continue;
+            }
+
+            HashSet<Character> set = new HashSet<>();
+
+            for(int i = startIndex + 1; i < endIndex; i++){
+                set.add(s.charAt(i));
+            }
+            count += set.size();
+
+        }
+
+        return count;
+
+    }
+
+}
